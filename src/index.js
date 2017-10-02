@@ -44,7 +44,7 @@ scene.add( ambient );
 //
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
-controls.enablePan = false;
+controls.enablePan = true;
 controls.enableRotate = true;
 
 //
@@ -72,7 +72,7 @@ loadModel(CuteOcto);
 const reloadModel = ( file ) => {
   let model = scene.getObjectByName( "model" );
   let reader = new FileReader();
-  reader.onload = ( f ) => {
+  reader.onload = () => {
     renderStl( loader.parse( reader.result ) );
   };
   reader.readAsArrayBuffer( file );

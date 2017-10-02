@@ -6,33 +6,26 @@ const handleDrop = (event) => {
   if ( reloadHandler === null )
     return;
 
-  console.log("Drop");
-    // If dropped items aren't files, reject them
-    var dt = event.dataTransfer;
-    if (dt.items) {
+  // If dropped items aren't files, reject them
+  let dt = event.dataTransfer;
+  if (dt.items) {
     // Use DataTransferItemList interface to access the file(s)
-    for (var i=0; i < dt.items.length; i++) {
-      if (dt.items[i].kind == "file") {
-        var f = dt.items[i].getAsFile();
-        console.log("... file[" + i + "].name = " + f.name);
-        reloadHandler( f );
-      }
-    }
-  } else {
+    if (dt.items[0] && dt.items[0].kind == "file") {
+      let f = dt.items[0].getAsFile();
+      reloadHandler( f );
+    } 
+  } else if (dt.files.length > 0) {
     // Use DataTransfer interface to access the file(s)
-    for (var i=0; i < dt.files.length; i++) {
-      console.log("... file[" + i + "].name = " + dt.files[i].name);
-    }  
+    reloadHandler( dt.files[0] ); 
   }
 }
 
 const cleanup = (event) => {
-  console.log("dragEnd");
   // Remove all of the drag data
-  var dt = event.dataTransfer;
+  let dt = event.dataTransfer;
   if (dt.items) {
     // Use DataTransferItemList interface to remove the drag data
-    for (var i = 0; i < dt.items.length; i++) {
+    for (let i = 0; i < dt.items.length; i++) {
       dt.items.remove(i);
     }
   } else {
