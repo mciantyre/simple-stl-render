@@ -88,38 +88,38 @@ __WEBPACK_IMPORTED_MODULE_2__OrbitControls___default()(__WEBPACK_IMPORTED_MODULE
 //
 // Scene
 //
-var scene = new __WEBPACK_IMPORTED_MODULE_0_three__["Scene"]();
-scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["Color"]( 0xddddff );
+const scene = new __WEBPACK_IMPORTED_MODULE_0_three__["Scene"]();
+scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["Color"]( 0xc2d8f9 );
 
 //
 // Camera
 //
-var camera = new __WEBPACK_IMPORTED_MODULE_0_three__["PerspectiveCamera"]( 35, window.innerWidth/window.innerHeight, 0.1, 1000 );
+const camera = new __WEBPACK_IMPORTED_MODULE_0_three__["PerspectiveCamera"]( 35, window.innerWidth/window.innerHeight, 0.1, 1000 );
 camera.position.z = 5;
 
 //
 // Renderer
 //
-var renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["WebGLRenderer"]();
+const renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["WebGLRenderer"]();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 //
 // Lights
 //
-var light = new __WEBPACK_IMPORTED_MODULE_0_three__["DirectionalLight"]( 0xffffff );
-light.position.set( 1, 1, 1 );
-scene.add( light );
-var light = new __WEBPACK_IMPORTED_MODULE_0_three__["DirectionalLight"]( 0xaaaaaa );
-light.position.set( -1, -1, -1 );
-scene.add( light );
-var light = new __WEBPACK_IMPORTED_MODULE_0_three__["AmbientLight"]( 0x888888 );
-scene.add( light );
+const bright = new __WEBPACK_IMPORTED_MODULE_0_three__["DirectionalLight"]( 0xffffff );
+bright.position.set( 1, 1, 1 );
+scene.add( bright );
+const secondary = new __WEBPACK_IMPORTED_MODULE_0_three__["DirectionalLight"]( 0xaaaaaa );
+secondary.position.set( -1, -1, -1 );
+scene.add( secondary );
+const ambient = new __WEBPACK_IMPORTED_MODULE_0_three__["AmbientLight"]( 0x666666 );
+scene.add( ambient );
 
 //
 // Controls
 //
-var controls = new __WEBPACK_IMPORTED_MODULE_0_three__["OrbitControls"](camera, renderer.domElement);
+const controls = new __WEBPACK_IMPORTED_MODULE_0_three__["OrbitControls"](camera, renderer.domElement);
 controls.enableZoom = true;
 controls.enablePan = true;
 controls.enableRotate = true;
@@ -127,10 +127,10 @@ controls.enableRotate = true;
 //
 // STL Loader
 //
-var loader = new __WEBPACK_IMPORTED_MODULE_0_three__["STLLoader"]();
+const loader = new __WEBPACK_IMPORTED_MODULE_0_three__["STLLoader"]();
 loader.load( __WEBPACK_IMPORTED_MODULE_3__models_CuteOcto_stl___default.a, function ( geometry ) {
-  var material = new __WEBPACK_IMPORTED_MODULE_0_three__["MeshPhongMaterial"]( { color: 0xff5533, specular: 0x111111, shininess: 50 } );
-  var mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["Mesh"]( geometry, material );
+  const material = new __WEBPACK_IMPORTED_MODULE_0_three__["MeshPhongMaterial"]( { color: 0xff5533, specular: 0x111111, shininess: 50 } );
+  const mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["Mesh"]( geometry, material );
   mesh.rotation.set( - Math.PI / 2, 0, - Math.PI );
   mesh.position.set( 0, - 0.5, 0 );
   mesh.scale.set( 0.02, 0.02, 0.02 );
@@ -142,7 +142,7 @@ loader.load( __WEBPACK_IMPORTED_MODULE_3__models_CuteOcto_stl___default.a, funct
 //
 // Animation loop
 //
-var animate = function () {
+const animate = function () {
   requestAnimationFrame( animate );
   controls.update();
   renderer.render( scene, camera );

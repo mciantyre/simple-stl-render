@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import STLLoader from "./STLLoader";
 import OrbitControls from "./OrbitControls";
 import CuteOcto from "../models/CuteOcto.stl";
+import registerDropHandler from "./drop";
 
 // Prepare loaders and controls
 STLLoader(THREE);
@@ -43,23 +44,45 @@ scene.add( ambient );
 //
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
-controls.enablePan = true;
+controls.enablePan = false;
 controls.enableRotate = true;
 
 //
-// STL Loader
+// STL render and loader
 //
-const loader = new THREE.STLLoader();
-loader.load( CuteOcto, function ( geometry ) {
+const renderStl = ( geometry ) => {
   const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 50 } );
   const mesh = new THREE.Mesh( geometry, material );
+  mesh.name = "model";
   mesh.rotation.set( - Math.PI / 2, 0, - Math.PI );
   mesh.position.set( 0, - 0.5, 0 );
   mesh.scale.set( 0.02, 0.02, 0.02 );
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   scene.add( mesh );
-});
+}
+
+const loader = new THREE.STLLoader();
+const loadModel = ( path ) => {
+  loader.load( path, renderStl );
+}
+
+loadModel(CuteOcto);
+
+const reloadModel = ( file ) => {
+  let model = scene.getObjectByName( "model" );
+  let reader = new FileReader();
+  reader.onload = ( f ) => {
+    renderStl( loader.parse( reader.result ) );
+  };
+  reader.readAsArrayBuffer( file );
+  scene.remove( model );
+}
+
+//
+// Attach drop handling
+//
+registerDropHandler( renderer.domElement, reloadModel );
 
 //
 // Animation loop

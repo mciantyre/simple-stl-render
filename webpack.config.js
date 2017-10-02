@@ -11,10 +11,17 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.stl$/,
-        use: [ 'file-loader' ],
-      },
-    ]
-  }
+    {
+      test: /\.stl$/,
+      use: [ 'file-loader' ],
+    },
+    {
+      test: /\.js$/,
+      loader: 'babel-loader',
+      query: {
+        presets: ['es2015']
+     }
+   }
+   ]
+ }
 };
